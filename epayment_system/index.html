@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePayment - E-Payment System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">SecurePayment</div>
+            <div class="nav-right">
+                <span id="nav-user" class="nav-user" style="display: none;"></span>
+                <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
+                <button id="login-btn" class="btn btn-primary">Login</button>
+            </div>
+        </nav>
+
+        <!-- Auth Section -->
+        <div id="auth-section" class="auth-section">
+            <!-- Login Panel -->
+            <div id="login-panel" class="auth-panel active">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Login</button>
+                    <p class="switch-form">Don't have an account? <a href="#" onclick="switchPanel('register')">Register</a></p>
+                </form>
+            </div>
+
+            <!-- Register Panel -->
+            <div id="register-panel" class="auth-panel">
+                <h2>Register</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="register-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>National ID / BRC</label>
+                        <input type="text" id="register-nid" placeholder="e.g., 1234567890123" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password (Min 4 chars)</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="register-password-confirm" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Device MAC Address</label>
+                        <input type="text" id="register-mac" placeholder="e.g., 00:1A:2B:3C:4D:5E" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Register</button>
+                    <p class="switch-form">Already have an account? <a href="#" onclick="switchPanel('login')">Login</a></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="dashboard-section" style="display: none;">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="menu-item active" onclick="showPanel('overview')">Overview</div>
+                <div class="menu-item" onclick="showPanel('send-money')">Send Money</div>
+                <div class="menu-item" onclick="showPanel('history')">Transaction History</div>
+                <div class="menu-item" onclick="showPanel('search')">Find Users</div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Overview Panel -->
+                <div id="overview-panel" class="panel active">
+                    <h2>Account Overview</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <p><strong>Username:</strong> <span id="profile-username"></span></p>
+                            <p><strong>Balance:</strong> $<span id="profile-balance"></span></p>
+                            <p><strong>Daily Limit:</strong> $<span id="profile-daily-limit"></span></p>
+                            <p><strong>Account Status:</strong> <span id="profile-status"></span></p>
+                            <p><strong>Member Since:</strong> <span id="profile-created"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Send Money Panel -->
+                <div id="send-money-panel" class="panel">
+                    <h2>Send Money</h2>
+                    <form id="send-money-form">
+                        <div class="form-group">
+                            <label>Recipient Username</label>
+                            <input type="text" id="recipient-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount ($)</label>
+                            <input type="number" id="send-amount" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password (for encryption)</label>
+                            <input type="password" id="send-password" required>
+                        </div>
+                        <div id="transaction-status" class="status-message"></div>
+                        <button type="submit" class="btn btn-primary full-width">Send Money</button>
+                    </form>
+                </div>
+
+                <!-- Transaction History Panel -->
+                <div id="history-panel" class="panel">
+                    <h2>Transaction History</h2>
+                    <div id="transaction-list" class="transaction-list"></div>
+                </div>
+
+                <!-- Search Users Panel -->
+                <div id="search-panel" class="panel">
+                    <h2>Find Users</h2>
+                    <div class="form-group">
+                        <label>Search Username</label>
+                        <input type="text" id="search-query" placeholder="Enter username...">
+                    </div>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
