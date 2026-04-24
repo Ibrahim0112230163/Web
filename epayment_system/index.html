@@ -5,16 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecurePayment - E-Payment System</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class="wrapper">
         <!-- Navigation -->
         <nav class="navbar">
-            <div class="logo">SecurePayment</div>
-            <div class="nav-right">
-                <span id="nav-user" class="nav-user" style="display: none;"></span>
-                <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
-                <button id="login-btn" class="btn btn-primary">Login</button>
+            <div class="navbar-container">
+                <div class="navbar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>SecurePayment</span>
+                </div>
+                <div class="nav-right">
+                    <span id="nav-user" class="nav-user" style="display: none;">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="nav-username"></span>
+                    </span>
+                    <button id="logout-btn" class="btn btn-logout" style="display: none;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                    <button id="login-btn" class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
             </div>
         </nav>
 
@@ -22,117 +35,570 @@
         <div id="auth-section" class="auth-section">
             <!-- Login Panel -->
             <div id="login-panel" class="auth-panel active">
-                <h2>Login</h2>
-                <form id="login-form">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" id="login-username" required>
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <h1>Welcome Back</h1>
+                        <p>Sign in to your SecurePayment account</p>
                     </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="login-password" required>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-username">
+                                <i class="fas fa-user"></i> Username
+                            </label>
+                            <input type="text" id="login-username" placeholder="Enter your username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">
+                                <i class="fas fa-lock"></i> Password
+                            </label>
+                            <input type="password" id="login-password" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                    </form>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" onclick="switchPanel('register')">Create one</a></p>
                     </div>
-                    <button type="submit" class="btn btn-primary full-width">Login</button>
-                    <p class="switch-form">Don't have an account? <a href="#" onclick="switchPanel('register')">Register</a></p>
-                </form>
+                </div>
             </div>
 
             <!-- Register Panel -->
             <div id="register-panel" class="auth-panel">
-                <h2>Register</h2>
-                <form id="register-form">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" id="register-username" required>
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fas fa-user-plus"></i>
+                        <h1>Create Account</h1>
+                        <p>Join SecurePayment today</p>
                     </div>
-                    <div class="form-group">
-                        <label>National ID / BRC</label>
-                        <input type="text" id="register-nid" placeholder="e.g., 1234567890123" required>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-username">
+                                <i class="fas fa-user"></i> Username
+                            </label>
+                            <input type="text" id="register-username" placeholder="Choose a username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-nid">
+                                <i class="fas fa-id-card"></i> National ID / BRC
+                            </label>
+                            <input type="text" id="register-nid" placeholder="e.g., 1234567890123" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="register-password">
+                                    <i class="fas fa-lock"></i> Password
+                                </label>
+                                <input type="password" id="register-password" placeholder="Min 4 characters" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password-confirm">
+                                    <i class="fas fa-check-circle"></i> Confirm Password
+                                </label>
+                                <input type="password" id="register-password-confirm" placeholder="Confirm password" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-mac">
+                                <i class="fas fa-microchip"></i> Device MAC Address
+                            </label>
+                            <input type="text" id="register-mac" placeholder="e.g., 00:1A:2B:3C:4D:5E" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </form>
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" onclick="switchPanel('login')">Sign In</a></p>
                     </div>
-                    <div class="form-group">
-                        <label>Password (Min 4 chars)</label>
-                        <input type="password" id="register-password" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Confirm Password</label>
-                        <input type="password" id="register-password-confirm" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Device MAC Address</label>
-                        <input type="text" id="register-mac" placeholder="e.g., 00:1A:2B:3C:4D:5E" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary full-width">Register</button>
-                    <p class="switch-form">Already have an account? <a href="#" onclick="switchPanel('login')">Login</a></p>
-                </form>
+                </div>
             </div>
         </div>
 
         <!-- Dashboard Section -->
         <div id="dashboard-section" class="dashboard-section" style="display: none;">
             <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="menu-item active" onclick="showPanel('overview')">Overview</div>
-                <div class="menu-item" onclick="showPanel('send-money')">Send Money</div>
-                <div class="menu-item" onclick="showPanel('history')">Transaction History</div>
-                <div class="menu-item" onclick="showPanel('search')">Find Users</div>
-            </div>
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Menu</h3>
+                </div>
+                <nav class="sidebar-menu">
+                    <div class="menu-item active" onclick="showPanel('overview')">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </div>
+                    <div class="menu-item" onclick="showPanel('send-money')">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Send Money</span>
+                    </div>
+                    <div class="menu-item" onclick="showPanel('history')">
+                        <i class="fas fa-history"></i>
+                        <span>Transaction History</span>
+                    </div>
+                    <div class="menu-item" onclick="showPanel('search')">
+                        <i class="fas fa-search"></i>
+                        <span>Find Users</span>
+                    </div>
+                    <div class="menu-item" onclick="showPanel('crypto-simulator')">
+                        <i class="fas fa-flask"></i>
+                        <span>Crypto Simulator</span>
+                    </div>
+                </nav>
+            </aside>
 
             <!-- Main Content -->
-            <div class="main-content">
+            <main class="main-content">
                 <!-- Overview Panel -->
                 <div id="overview-panel" class="panel active">
-                    <h2>Account Overview</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <p><strong>Username:</strong> <span id="profile-username"></span></p>
-                            <p><strong>Balance:</strong> $<span id="profile-balance"></span></p>
-                            <p><strong>Daily Limit:</strong> $<span id="profile-daily-limit"></span></p>
-                            <p><strong>Account Status:</strong> <span id="profile-status"></span></p>
-                            <p><strong>Member Since:</strong> <span id="profile-created"></span></p>
+                    <div class="panel-header">
+                        <h2><i class="fas fa-chart-pie"></i> Account Overview</h2>
+                    </div>
+                    
+                    <!-- Account Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <i class="fas fa-wallet"></i>
+                                <span>Balance</span>
+                            </div>
+                            <div class="stat-value">$<span id="profile-balance">0.00</span></div>
+                            <div class="stat-footer">Current account balance</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <i class="fas fa-arrow-up-right"></i>
+                                <span>Daily Limit</span>
+                            </div>
+                            <div class="stat-value">$<span id="profile-daily-limit">5000</span></div>
+                            <div class="stat-footer">Daily transaction limit</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Status</span>
+                            </div>
+                            <div class="stat-value status-badge" id="profile-status">Active</div>
+                            <div class="stat-footer">Account status</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Member Since</span>
+                            </div>
+                            <div class="stat-value"><span id="profile-created">-</span></div>
+                            <div class="stat-footer">Account creation date</div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Card -->
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <i class="fas fa-user-circle profile-icon"></i>
+                            <div class="profile-info">
+                                <h3>User Profile</h3>
+                                <p id="profile-username-text">-</p>
+                            </div>
+                        </div>
+                        <div class="profile-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Username:</span>
+                                <span class="detail-value" id="profile-username">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Account Type:</span>
+                                <span class="detail-value">Personal</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Verification:</span>
+                                <span class="detail-value"><i class="fas fa-shield-alt"></i> Verified</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Send Money Panel -->
                 <div id="send-money-panel" class="panel">
-                    <h2>Send Money</h2>
-                    <form id="send-money-form">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-paper-plane"></i> Send Money</h2>
+                        <p>Transfer funds securely to another user</p>
+                    </div>
+                    
+                    <form id="send-money-form" class="form-card">
                         <div class="form-group">
-                            <label>Recipient Username</label>
-                            <input type="text" id="recipient-username" required>
+                            <label for="recipient-username">
+                                <i class="fas fa-user-check"></i> Recipient Username
+                            </label>
+                            <input type="text" id="recipient-username" placeholder="Enter recipient's username" required>
+                            <small>The person who will receive the money</small>
                         </div>
+                        
                         <div class="form-group">
-                            <label>Amount ($)</label>
-                            <input type="number" id="send-amount" step="0.01" min="0" required>
+                            <label for="send-amount">
+                                <i class="fas fa-dollar-sign"></i> Amount ($)
+                            </label>
+                            <input type="number" id="send-amount" step="0.01" min="0" placeholder="0.00" required>
+                            <small>Must be within your daily limit</small>
                         </div>
+                        
                         <div class="form-group">
-                            <label>Password (for encryption)</label>
-                            <input type="password" id="send-password" required>
+                            <label for="send-password">
+                                <i class="fas fa-lock"></i> Password (for encryption)
+                            </label>
+                            <input type="password" id="send-password" placeholder="Confirm your password" required>
+                            <small>Your password is used to encrypt the transaction</small>
                         </div>
+                        
                         <div id="transaction-status" class="status-message"></div>
-                        <button type="submit" class="btn btn-primary full-width">Send Money</button>
+                        <button type="submit" class="btn btn-primary full-width btn-lg">
+                            <i class="fas fa-send"></i> Send Money Securely
+                        </button>
                     </form>
                 </div>
 
                 <!-- Transaction History Panel -->
                 <div id="history-panel" class="panel">
-                    <h2>Transaction History</h2>
-                    <div id="transaction-list" class="transaction-list"></div>
+                    <div class="panel-header">
+                        <h2><i class="fas fa-history"></i> Transaction History</h2>
+                        <p>View all your recent transactions</p>
+                    </div>
+                    <div id="transaction-list" class="transaction-list">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No transactions yet</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Search Users Panel -->
                 <div id="search-panel" class="panel">
-                    <h2>Find Users</h2>
-                    <div class="form-group">
-                        <label>Search Username</label>
-                        <input type="text" id="search-query" placeholder="Enter username...">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-search"></i> Find Users</h2>
+                        <p>Search and connect with other SecurePayment users</p>
                     </div>
-                    <div id="search-results" class="search-results"></div>
+                    
+                    <div class="search-card">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-query" placeholder="Enter username to search...">
+                        </div>
+                    </div>
+                    
+                    <div id="search-results" class="search-results">
+                        <div class="empty-state">
+                            <i class="fas fa-search"></i>
+                            <p>Search for a user to get started</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Crypto Simulator Panel -->
+                <div id="crypto-simulator-panel" class="panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-flask"></i> Cryptographic Simulator</h2>
+                        <p>Visualize encryption, HMAC, biometric, and timestamp in real-time</p>
+                    </div>
+
+                    <!-- Simulator Tabs -->
+                    <div class="simulator-tabs">
+                        <div class="simulator-tab-buttons">
+                            <button class="simulator-tab-btn active" onclick="showSimulatorTab('aes')">
+                                <i class="fas fa-lock"></i> AES Encryption
+                            </button>
+                            <button class="simulator-tab-btn" onclick="showSimulatorTab('hmac')">
+                                <i class="fas fa-fingerprint"></i> HMAC
+                            </button>
+                            <button class="simulator-tab-btn" onclick="showSimulatorTab('biometric')">
+                                <i class="fas fa-face-smile"></i> Biometric
+                            </button>
+                            <button class="simulator-tab-btn" onclick="showSimulatorTab('timestamp')">
+                                <i class="fas fa-clock"></i> Timestamp
+                            </button>
+                            <button class="simulator-tab-btn" onclick="showSimulatorTab('transaction-flow')">
+                                <i class="fas fa-arrows-alt-h"></i> Full Flow
+                            </button>
+                        </div>
+
+                        <!-- AES Tab -->
+                        <div id="aes-tab" class="simulator-tab active">
+                            <div class="simulator-card">
+                                <h3><i class="fas fa-lock"></i> AES-256-CBC Encryption & Decryption</h3>
+                                <div class="simulator-form">
+                                    <div class="form-group">
+                                        <label>Plaintext Message:</label>
+                                        <textarea id="aes-plaintext" placeholder="Enter message to encrypt..." rows="3">Send $100 to Alice</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password:</label>
+                                        <input type="password" id="aes-password" placeholder="Enter password" value="12334">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Timestamp (for key derivation):</label>
+                                        <input type="text" id="aes-timestamp" placeholder="Auto-generated" readonly>
+                                        <button type="button" class="btn btn-secondary" onclick="generateTimestamp('aes-timestamp')">
+                                            <i class="fas fa-sync"></i> Generate New
+                                        </button>
+                                    </div>
+                                    <button class="btn btn-primary full-width" onclick="simulateAESEncryption()">
+                                        <i class="fas fa-lock"></i> Encrypt
+                                    </button>
+                                </div>
+
+                                <!-- Encryption Flow Visualization -->
+                                <div class="encryption-flow" id="aes-flow" style="display: none;">
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 1: Original Plaintext</div>
+                                        <div class="step-content" id="aes-step1-content"></div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 2: Derive Encryption Key</div>
+                                        <div class="step-content">
+                                            <div class="step-formula">Key = SHA256(Password + Timestamp)</div>
+                                            <div class="step-result" id="aes-step2-result"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 3: Generate Random IV (Initialization Vector)</div>
+                                        <div class="step-content" id="aes-step3-content"></div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 4: AES-256-CBC Encryption</div>
+                                        <div class="step-content">
+                                            <div class="step-formula">Ciphertext = AES(Key, IV, Plaintext)</div>
+                                            <div class="step-result" id="aes-step4-result"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 5: Combine & Base64 Encode</div>
+                                        <div class="step-content">
+                                            <div class="step-formula">Encrypted = Base64(IV + Ciphertext)</div>
+                                            <div class="step-result" id="aes-step5-result"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-secondary full-width" id="aes-decrypt-btn" style="display: none; margin-top: 20px;" onclick="simulateAESDecryption()">
+                                    <i class="fas fa-unlock"></i> Decrypt Result
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- HMAC Tab -->
+                        <div id="hmac-tab" class="simulator-tab">
+                            <div class="simulator-card">
+                                <h3><i class="fas fa-fingerprint"></i> HMAC-SHA256 Generation & Verification</h3>
+                                <div class="simulator-form">
+                                    <div class="form-group">
+                                        <label>Message:</label>
+                                        <textarea id="hmac-message" placeholder="Enter message for HMAC..." rows="3">{"sender":"user1","receiver":"user2","amount":100,"timestamp":"2026-04-25T14:30:45"}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>K1 (HMAC Key) - from database:</label>
+                                        <input type="text" id="hmac-key" placeholder="Enter K1 key" value="test_k1_key_12345">
+                                    </div>
+                                    <button class="btn btn-primary full-width" onclick="simulateHMACGeneration()">
+                                        <i class="fas fa-lock"></i> Generate HMAC
+                                    </button>
+                                </div>
+
+                                <!-- HMAC Flow -->
+                                <div class="encryption-flow" id="hmac-flow" style="display: none;">
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 1: Message to be Signed</div>
+                                        <div class="step-content" id="hmac-step1-content"></div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 2: HMAC Key (K1)</div>
+                                        <div class="step-content" id="hmac-step2-content"></div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Step 3: HMAC-SHA256 Generation</div>
+                                        <div class="step-content">
+                                            <div class="step-formula">F1 = HMAC-SHA256(K1, Message)</div>
+                                            <div class="step-result" id="hmac-step3-result"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step success-step">
+                                        <div class="step-header">✓ HMAC Generated Successfully</div>
+                                        <div class="step-content">
+                                            <div class="step-result" id="hmac-final-result"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-secondary full-width" id="hmac-verify-btn" style="display: none; margin-top: 20px;" onclick="simulateHMACVerification()">
+                                    <i class="fas fa-check"></i> Verify HMAC
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Biometric Tab -->
+                        <div id="biometric-tab" class="simulator-tab">
+                            <div class="simulator-card">
+                                <h3><i class="fas fa-face-smile"></i> Biometric Authentication Flow</h3>
+                                <div class="simulator-form">
+                                    <div class="form-group">
+                                        <label>Current Method:</label>
+                                        <div class="biometric-methods">
+                                            <button type="button" class="biometric-method-btn active" onclick="switchBioMethod('password')">
+                                                <i class="fas fa-key"></i> Password (Current)
+                                            </button>
+                                            <button type="button" class="biometric-method-btn" onclick="switchBioMethod('fingerprint')">
+                                                <i class="fas fa-fingerprint"></i> Fingerprint (Future)
+                                            </button>
+                                            <button type="button" class="biometric-method-btn" onclick="switchBioMethod('faceid')">
+                                                <i class="fas fa-face-smile"></i> Face ID (Future)
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div id="bio-input-section">
+                                        <div class="form-group">
+                                            <label>Password:</label>
+                                            <input type="password" id="bio-password" placeholder="Enter password" value="12334">
+                                        </div>
+                                        <button class="btn btn-primary full-width" onclick="simulateBioAuth()">
+                                            <i class="fas fa-lock"></i> Authenticate
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Biometric Flow -->
+                                <div class="encryption-flow" id="bio-flow" style="display: none;">
+                                    <div class="flow-step" id="bio-step1"></div>
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                                    <div class="flow-step" id="bio-step2"></div>
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                                    <div class="flow-step" id="bio-step3"></div>
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                                    <div class="flow-step" id="bio-step4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timestamp Tab -->
+                        <div id="timestamp-tab" class="simulator-tab">
+                            <div class="simulator-card">
+                                <h3><i class="fas fa-clock"></i> Timestamp & Replay Prevention</h3>
+                                <div class="simulator-form">
+                                    <button class="btn btn-primary full-width" onclick="simulateTimestampGeneration()">
+                                        <i class="fas fa-clock"></i> Generate Current Timestamp
+                                    </button>
+                                </div>
+
+                                <!-- Timestamp Flow -->
+                                <div class="encryption-flow" id="timestamp-flow" style="display: none;">
+                                    <div class="flow-step">
+                                        <div class="step-header">Current Transaction Timestamp</div>
+                                        <div class="step-content" id="timestamp-current"></div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Server Validation Check</div>
+                                        <div class="step-content" id="timestamp-validation"></div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step">
+                                        <div class="step-header">Key Derivation Uses Timestamp</div>
+                                        <div class="step-content" id="timestamp-key-usage"></div>
+                                    </div>
+
+                                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+
+                                    <div class="flow-step success-step">
+                                        <div class="step-header">✓ Replay Attack Prevention Verified</div>
+                                        <div class="step-content">
+                                            <p>Each transaction has unique timestamp → unique encryption key → previous transactions cannot be replayed</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Full Transaction Flow Tab -->
+                        <div id="transaction-flow-tab" class="simulator-tab">
+                            <div class="simulator-card">
+                                <h3><i class="fas fa-arrows-alt-h"></i> Real Transaction Encryption & Decryption</h3>
+                                <p style="color: #666; margin-bottom: 20px; font-size: 14px;">
+                                    ✓ Uses REAL encryption operations | ✓ Shows ACTUAL output at each step | ✓ Sender & Receiver flows
+                                </p>
+                                
+                                <!-- Data Input -->
+                                <div class="simulator-form">
+                                    <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">Transaction Data:</label>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                            <div class="form-group" style="margin: 0;">
+                                                <label>Sender Username:</label>
+                                                <input type="text" id="real-sender" placeholder="Your username">
+                                            </div>
+                                            <div class="form-group" style="margin: 0;">
+                                                <label>Receiver Username:</label>
+                                                <input type="text" id="real-receiver" placeholder="Recipient username">
+                                            </div>
+                                            <div class="form-group" style="margin: 0;">
+                                                <label>Amount (Taka):</label>
+                                                <input type="number" id="real-amount" placeholder="Amount to send">
+                                            </div>
+                                            <div class="form-group" style="margin: 0;">
+                                                <label>Password:</label>
+                                                <input type="password" id="real-password" placeholder="Your password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="btn btn-primary full-width" onclick="simulateRealTransactionFlowFromPaper()">
+                                        <i class="fas fa-lock"></i> Show Encryption (According to Paper Framework)
+                                    </button>
+                                    
+                                    <div style="margin-top: 15px; padding: 12px; background: #e7f3ff; border-left: 4px solid #2196F3; border-radius: 4px;">
+                                        <p style="margin: 0; font-size: 13px; color: #1565c0;">
+                                            <strong>💡 Pro Tip:</strong> Send money first using the "Send Money" tab. A button will appear in the success message to automatically show how that transaction was encrypted!
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Transaction Flow Visualization -->
+                                <div id="real-transaction-container" style="display: none; margin-top: 20px;">
+                                    <div id="real-transaction-flow"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="simulator_paper_framework.js"></script>
 </body>
 </html>
