@@ -2,18 +2,19 @@
 Flask backend API for secure e-payment system
 Implements user registration, login, transactions
 """
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from datetime import datetime
 import secrets
 import json
+import os
 
 from crypto import CryptoEngine
 from database import (
     init_database, UserDatabase, TransactionDatabase, get_db_connection
 )
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
 
 # Session storage for users
@@ -25,13 +26,16 @@ init_database()
 
 @app.route('/')
 def root():
-    """Root endpoint - redirects to frontend"""
-    return jsonify({
-        'message': 'E-Payment System Backend API',
-        'status': 'running',
-        'frontend': 'http://localhost:8000',
-        'api_base': 'http://localhost:5000/api'
-    }), 200
+    """Serve the main website"""
+    return send_from_directory('.', 'index.html')
+
+
+@app.route('/<path:path>')
+def serve_static(path):
+    """Serve static files (CSS, JS, etc.)"""
+    if os.path.isfile(path):
+        return send_from_directory('.', path)
+    return send_from_directory('.', 'index.html')
 
 
 def require_login(f):
