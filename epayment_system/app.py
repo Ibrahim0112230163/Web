@@ -251,7 +251,7 @@ def get_transaction_history():
 @require_login
 def send_transaction():
     """
-    Send money to another user (per ICECTE 2022 framework)
+    Send money to another user 
     Implements full cryptographic workflow:
     1. Create message M = {sender, receiver, amount, timestamp}
     2. Generate F1 = HMAC(K1, M)
